@@ -1,0 +1,38 @@
+{
+    "activeFile": "map.json",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "exportAsImage.useCurrentScale": true,
+    "fileStates": {
+        "": {
+            "scaleInDock": 2
+        },
+        "#spritesheet": {
+            "scaleInDock": 3
+        },
+        "map.json": {
+            "scale": 4,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 273.5,
+                "y": 373.625
+            }
+        },
+        "map.json#spritesheet": {
+            "scaleInDock": 1.5
+        },
+        "spritesheet.tsj": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        }
+    },
+    "openFiles": [
+        "map.json"
+    ],
+    "project": "untitled.tiled-project",
+    "recentFiles": [
+        "map.json",
+        "spritesheet.tsj"
+    ]
+}
