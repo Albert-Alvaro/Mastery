@@ -4,7 +4,10 @@ const canvas = document.querySelector('canvas');
 
 const context = canvas.getContext('2d');
 
-
+const offset = {
+    x:-600,
+    y:-700
+}
 
 const image = new Image();
 image.src = './map.png'
@@ -20,37 +23,34 @@ for (let i = 0 ; i < collisions.length; i+=50){
 }
 
 class Boundary {
-    static width = 64
-    static height = 64
+    static width = 48
+    static height = 48
     constructor({position}){
         this.position = position
-        this.width = 64
-        this.height = 64
+        this.width = 48
+        this.height = 48
     }
 
     draw(){
-        context.fillStyle = 'rgba(255,0,0,0.2)';
+        context.fillStyle = 'rgba(255,0,0,0)';
         context.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 }
 
 const boundaries = []
-const offset = {
-    x:-600,
-    y:-700
-}
 collisionsMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
-        if (symbol > 0)
+        if (symbol === 1704)
         boundaries.push(new Boundary({position: {x: j*Boundary.width + offset.x ,y: i * Boundary.height +offset.y}}))
     })
 })
 
 class Sprite {
-    constructor({position,image, frames = {max: 1}}) {
+    constructor({position,image, frames = {max: 1}, sizef = {max: 1}}) {
         this.position = position
         this.image = image
         this.frames = frames
+        this.sizef = sizef
 
         this.image.onload = () => {
             this.width = this.image.width/ this.frames.max
@@ -68,8 +68,8 @@ class Sprite {
             this.image.height / this.frames.max,
             this.position.x,
             this.position.y, 
-            this.image.width / this.frames.max,
-            this.image.height / this.frames.max, 
+            this.image.width / this.sizef.max,
+            this.image.height / this.sizef.max, 
         );
     }
 }
@@ -82,7 +82,8 @@ const player = new Sprite({
     image: playerImage,
     frames: {
         max: 4
-    }
+    },
+    sizef: {max:2}
 })
 
 const background = new Sprite({
