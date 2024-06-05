@@ -12,11 +12,11 @@
             "scaleInDock": 3
         },
         "map.json": {
-            "scale": 4,
+            "scale": 32,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 273.5,
-                "y": 373.625
+                "x": 233.75,
+                "y": 220.890625
             }
         },
         "map.json#spritesheet": {
@@ -27,6 +27,7 @@
             "scaleInEditor": 1
         }
     },
+    "map.lastUsedFormat": "json",
     "openFiles": [
         "map.json"
     ],

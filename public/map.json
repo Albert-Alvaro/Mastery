@@ -130,50 +130,6 @@
          "name":"Object Layer 1",
          "objects":[
                 {
-                 "height":35,
-                 "id":1,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":798,
-                 "x":-1,
-                 "y":-32
-                }, 
-                {
-                 "height":802,
-                 "id":2,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":37,
-                 "x":-36,
-                 "y":-33
-                }, 
-                {
-                 "height":38,
-                 "id":3,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":812,
-                 "x":-8,
-                 "y":758
-                }, 
-                {
-                 "height":825,
-                 "id":4,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":41,
-                 "x":798,
-                 "y":-27
-                }, 
-                {
                  "height":28.5,
                  "id":5,
                  "name":"",
@@ -678,8 +634,7 @@
                  "width":19,
                  "x":140.5,
                  "y":670
-                },
-            
+                }, 
                 {
                  "height":67,
                  "id":51,
@@ -723,7 +678,8 @@
                  "width":24,
                  "x":510,
                  "y":446.666666666667
-                }, 
+                },
+            
                 {
                  "height":52,
                  "id":55,
@@ -910,10 +866,76 @@
                  "width":13.3333333333333,
                  "x":722,
                  "y":65.3333333333333
+                }, 
+                {
+                 "height":0,
+                 "id":76,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":-122,
+                 "y":-26.5
+                }, 
+                {
+                 "height":16,
+                 "id":77,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":800,
+                 "x":0,
+                 "y":0
+                }, 
+                {
+                 "height":768,
+                 "id":78,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":784,
+                 "y":0
+                }, 
+                {
+                 "height":16,
+                 "id":79,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":800,
+                 "x":0,
+                 "y":752
+                }, 
+                {
+                 "height":752,
+                 "id":80,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":0,
+                 "y":0
+                }, 
+                {
+                 "height":0,
+                 "id":81,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":-96,
+                 "y":528
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -979,7 +1001,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":72,
+ "nextobjectid":82,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
