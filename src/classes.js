@@ -1,5 +1,5 @@
 export class Sprite {
-    constructor({position,image, frames = {max: 1}, sizef = {max: 1}, context, item}) {
+    constructor({position,image, frames = {max: 1}, sizef = {max: 1}, context, item, sprites}) {
         this.position = position
         this.image = image
         this.frames = {...frames, valx: 0, valy: 0, elapsed: 0}
@@ -8,6 +8,8 @@ export class Sprite {
         this.moving = false
         this.key = ''
         this.item = item
+        this.sprites = sprites
+
         this.image.onload = () => {
             this.width = this.image.width/ this.frames.max
             this.height = this.image.height/ this.frames.max
@@ -69,7 +71,11 @@ export class Sprite {
                 if (this.frames.valx < this.frames.max -1 ) this.frames.valx++
                 else this.frames.valx = 0
             }
-        }    
+        } else if (this.key === 'i'){
+            this.frames.max = 3
+            this.frames.valy = 0
+            this.frames.valx = 0
+        }
         
     }   
 }

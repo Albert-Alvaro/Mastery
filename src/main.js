@@ -17,6 +17,10 @@ image.src = './map.png'
 
 const playerImage = new Image();
 playerImage.src = './player.png';
+
+const attackImage = new Image();
+attackImage.src = './ATTACK.png'
+
 const foreimg = new Image();
 foreimg.src = './foremap.png';
 
@@ -56,7 +60,8 @@ const player = new Sprite({
         max: 4
     },
     sizef: {max:0.25},
-    context: context
+    context: context,
+    sprites: attackImage
 })
 const background = new Sprite({
     position: { x: offset.x, y: offset.y,},
@@ -82,6 +87,18 @@ const keys = {
     },
     d: {
         pressed: false
+    },
+    i: {
+        pressed : false
+    },
+    j: {
+        pressed: false
+    },
+    k: {
+        pressed: false
+    },
+    l: {
+        pressed: false
     }
 }
 const movables = [background, ...boundaries, foreground, ...interactors]
@@ -95,13 +112,8 @@ function rectCollision({rectangle1, rectangle2}){
     )
 }
 
-function interact({itemclass}){
-
-}
-
 function animate() {
     window.requestAnimationFrame(animate);
-
 
         background.draw();
         boundaries.forEach(boundary => {
@@ -111,6 +123,8 @@ function animate() {
         foreground.draw()
     let moving = true;
     player.moving = false
+    player.image = playerImage
+    player.sizef.max = 0.25
     if ((keys.w.pressed) && (lastkey === 'w')) {
         player.moving = true
         player.key = 'w'
@@ -230,6 +244,11 @@ function animate() {
                 movable.position.y -= 3;
             })
         }
+    }else if (keys.i.pressed && lastkey === 'i'){
+        player.image = player.sprites
+        player.frames.valx = 0
+        player.frames.valy = 0
+        player.sizef.max = 0.33
     }
     
 }
@@ -255,6 +274,22 @@ window.addEventListener('keydown', (e) => {
         keys.d.pressed = true;
         lastkey = 'd';
         break;
+        case 'i':
+        keys.i.pressed = true;
+        lastkey = 'i';
+        break;
+        case 'j':
+        keys.j.pressed = true;
+        lastkey = 'j';
+        break;
+        case 'k':
+        keys.k.pressed = true;
+        lastkey = 'k';
+        break;
+        case 'l':
+        keys.l.pressed = true;
+        lastkey = 'l';
+        break;
     }
 })
 
@@ -271,6 +306,22 @@ window.addEventListener('keyup', (e) => {
         break;
         case 'd':
         keys.d.pressed = false;  
+        break;
+        case 'i':
+        keys.i.pressed = false;
+        lastkey = 'i';
+        break;
+        case 'j':
+        keys.j.pressed = false;
+        lastkey = 'j';
+        break;
+        case 'k':
+        keys.k.pressed = false;
+        lastkey = 'k';
+        break;
+        case 'l':
+        keys.l.pressed = false;
+        lastkey = 'l';
         break;
     }
 })

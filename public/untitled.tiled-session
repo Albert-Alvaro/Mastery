@@ -12,37 +12,80 @@
             "scaleInDock": 3
         },
         "Collisions.json": {
-            "scaleInDock": 3,
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "TX Plant.tsj": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "TX Player.tsj": {
+            "scaleInDock": 4,
+            "scaleInEditor": 1
+        },
+        "TX Shadow Plant.tsj": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TX Shadow.tsj": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "TX Struct.json": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "TX Tileset Wall.json": {
+            "scaleInDock": 2,
             "scaleInEditor": 1
         },
         "map.json": {
-            "scale": 3,
-            "selectedLayer": 2,
+            "scale": 2,
+            "selectedLayer": 7,
             "viewCenter": {
-                "x": 309.16666666666663,
-                "y": 313.16666666666663
+                "x": 330.75,
+                "y": 308.25
             }
         },
         "map.json#spritesheet": {
-            "scaleInDock": 4
+            "scaleInDock": 3
+        },
+        "props.tsj": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
         },
         "spritesheet.tsj": {
             "scaleInDock": 1.5,
             "scaleInEditor": 1
         }
     },
-    "last.imagePath": "C:/Users/alber/Downloads",
+    "last.externalTilesetPath": "C:/Users/alber/Downloads/Pixel Art Top Down - Basic/Texture",
+    "last.imagePath": "C:/Users/alber/Downloads/Pixel Art Top Down - Basic/Texture",
     "map.lastUsedFormat": "json",
     "openFiles": [
         "map.json",
-        "Collisions.json"
+        "props.tsj",
+        "TX Struct.json",
+        "TX Tileset Wall.json",
+        "TX Player.tsj",
+        "TX Plant.tsj",
+        "TX Shadow.tsj",
+        "TX Shadow Plant.tsj"
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
-        "Collisions.json",
+        "TX Shadow Plant.tsj",
+        "TX Shadow.tsj",
+        "TX Plant.tsj",
+        "TX Player.tsj",
+        "TX Tileset Wall.json",
+        "TX Struct.json",
+        "props.tsj",
         "map.json",
+        "Collisions.json",
         "spritesheet.tsj"
     ],
+    "tileset.lastUsedFilter": "All Files (*)",
     "tileset.lastUsedFormat": "json",
     "tileset.tileSize": {
         "height": 16,
