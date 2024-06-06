@@ -1,6 +1,9 @@
 import { collisions } from "../data/collisions";
+import { Boundary, Sprite } from "./classes";
 
 const canvas = document.querySelector('canvas');
+canvas.width = 1024;
+canvas.height = 576;
 
 const context = canvas.getContext('2d');
 
@@ -11,68 +14,24 @@ const offset = {
 
 const image = new Image();
 image.src = './map.png'
-canvas.width = 1024;
-canvas.height = 576;
 
 const playerImage = new Image();
 playerImage.src = './player.png';
+const foreimg = new Image();
+foreimg.src = './foremap.png';
 
 const collisionsMap = []
 for (let i = 0 ; i < collisions.length; i+=50){
     collisionsMap.push(collisions.slice(i, 50+i));
 }
 
-class Boundary {
-    static width = 48
-    static height = 48
-    constructor({position}){
-        this.position = position
-        this.width = 48
-        this.height = 48
-    }
-
-    draw(){
-        context.fillStyle = 'rgba(255,0,0,0)';
-        context.fillRect(this.position.x, this.position.y, this.width, this.height)
-    }
-}
-
 const boundaries = []
 collisionsMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
         if (symbol === 1704)
-        boundaries.push(new Boundary({position: {x: j*Boundary.width + offset.x ,y: i * Boundary.height +offset.y}}))
+        boundaries.push(new Boundary({position: {x: j*Boundary.width + offset.x ,y: i * Boundary.height +offset.y}, context: context}))
     })
 })
-
-class Sprite {
-    constructor({position,image, frames = {max: 1}, sizef = {max: 1}}) {
-        this.position = position
-        this.image = image
-        this.frames = frames
-        this.sizef = sizef
-
-        this.image.onload = () => {
-            this.width = this.image.width/ this.frames.max
-            this.height = this.image.height/ this.frames.max
-            
-        }
-        
-    }
-    draw() {
-        context.drawImage(
-            this.image,
-            0,
-            0,
-            this.image.width / this.frames.max,
-            this.image.height / this.frames.max,
-            this.position.x,
-            this.position.y, 
-            this.image.width / this.sizef.max,
-            this.image.height / this.sizef.max, 
-        );
-    }
-}
 
 const player = new Sprite({
     position: {
@@ -83,12 +42,19 @@ const player = new Sprite({
     frames: {
         max: 4
     },
-    sizef: {max:2}
+    sizef: {max:0.5},
+    context: context
 })
-
 const background = new Sprite({
     position: { x: offset.x, y: offset.y,},
-    image: image
+    image: image, 
+    context: context
+});
+
+const foreground = new Sprite({
+    position: { x: offset.x, y: offset.y,},
+    image: foreimg,
+    context: context
 });
 
 const keys = {
@@ -105,14 +71,14 @@ const keys = {
         pressed: false
     }
 }
-const movables = [background, ...boundaries]
+const movables = [background, ...boundaries, foreground]
 
 function rectCollision({rectangle1, rectangle2}){
     return (
         rectangle1.position.x + rectangle1.width >= rectangle2.position.x && 
-        rectangle1.position.x <= rectangle2.position.x + rectangle2.width&&
-        rectangle1.position.y<= rectangle2.position.y + rectangle2.height&&
-        rectangle1.position.y + rectangle1.height >= rectangle2.position.y
+        rectangle1.position.x <= rectangle2.position.x + rectangle2.width/2&&
+        rectangle1.position.y<= rectangle2.position.y + rectangle2.height/8 &&
+        rectangle1.position.y + rectangle1.height*1.7 >= rectangle2.position.y
     )
 }
 
@@ -125,8 +91,12 @@ function animate() {
             boundary.draw()        
         })
         player.draw()
+        foreground.draw()
     let moving = true;
-    if (keys.w.pressed && lastkey === 'w') {
+    player.moving = false
+    if ((keys.w.pressed) && (lastkey === 'w')) {
+        player.moving = true
+        player.key = 'w'
         for (let i = 0 ; i< boundaries.length; i++){
             const boundary = boundaries[i]
             if(rectCollision({rectangle1: player, rectangle2: {...boundary, position: {
@@ -144,6 +114,8 @@ function animate() {
             })}
     }
     else if (keys.a.pressed && lastkey === 'a'){
+        player.moving = true
+        player.key = 'a'
         for (let i = 0 ; i< boundaries.length; i++){
             const boundary = boundaries[i]
             if(rectCollision({rectangle1: player, rectangle2: {...boundary, position: {
@@ -163,6 +135,8 @@ function animate() {
 
     } 
     else if (keys.d.pressed && lastkey === 'd') {
+        player.moving = true
+        player.key = 'd'
         for (let i = 0 ; i< boundaries.length; i++){
             const boundary = boundaries[i]
             if(rectCollision({rectangle1: player, rectangle2: {...boundary, position: {
@@ -181,6 +155,8 @@ function animate() {
         }
     }
     else if (keys.s.pressed && lastkey === 's') {
+        player.moving = true
+        player.key = 's'
         for (let i = 0 ; i< boundaries.length; i++){
             const boundary = boundaries[i]
             if(rectCollision({rectangle1: player, rectangle2: {...boundary, position: {
@@ -200,9 +176,9 @@ function animate() {
     }
     
 }
-
-animate()
 let lastkey = "";
+animate()
+
 window.addEventListener('keydown', (e) => {
 
     switch (e.key){

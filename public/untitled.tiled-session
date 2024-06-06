@@ -12,15 +12,15 @@
             "scaleInDock": 3
         },
         "Collisions.json": {
-            "scaleInDock": 1,
+            "scaleInDock": 3,
             "scaleInEditor": 1
         },
         "map.json": {
-            "scale": 1.5,
-            "selectedLayer": 0,
+            "scale": 3,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 395,
-                "y": 406.33333333333326
+                "x": 309.16666666666663,
+                "y": 313.16666666666663
             }
         },
         "map.json#spritesheet": {
