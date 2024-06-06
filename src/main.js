@@ -1,5 +1,5 @@
-import { collisions } from "../data/collisions";
-import { Boundary, Sprite } from "./classes";
+import { collisions , interacts} from "../data/collisions";
+import { Boundary, Sprite, Item } from "./classes";
 
 const canvas = document.querySelector('canvas');
 canvas.width = 1024;
@@ -25,6 +25,11 @@ for (let i = 0 ; i < collisions.length; i+=50){
     collisionsMap.push(collisions.slice(i, 50+i));
 }
 
+const interactsMap = []
+for (let i = 0 ; i < interacts.length; i += 50){
+    interactsMap.push(interacts.slice(i,i+50));
+}
+
 const boundaries = []
 collisionsMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
@@ -33,16 +38,24 @@ collisionsMap.forEach((row, i) => {
     })
 })
 
+const interactors = []
+interactsMap.forEach((row, i) => {
+    row.forEach((symbol,j) => {
+        if (symbol == 1704)
+            interactors.push(new Boundary({position: {x: j*Boundary.width + offset.x, y: i*Boundary.height +offset.y}, context: context}))
+    })
+})
+
 const player = new Sprite({
     position: {
-        x:canvas.width/2 - (128 / 4) / 2, 
-        y:canvas.height /2- 128 / 2,
+        x:canvas.width/2 - (256 / 4) / 2, 
+        y:canvas.height /2- 256 / 2,
     },
     image: playerImage,
     frames: {
         max: 4
     },
-    sizef: {max:0.5},
+    sizef: {max:0.25},
     context: context
 })
 const background = new Sprite({
@@ -71,15 +84,19 @@ const keys = {
         pressed: false
     }
 }
-const movables = [background, ...boundaries, foreground]
+const movables = [background, ...boundaries, foreground, ...interactors]
 
 function rectCollision({rectangle1, rectangle2}){
     return (
-        rectangle1.position.x + rectangle1.width >= rectangle2.position.x && 
-        rectangle1.position.x <= rectangle2.position.x + rectangle2.width/2&&
-        rectangle1.position.y<= rectangle2.position.y + rectangle2.height/8 &&
-        rectangle1.position.y + rectangle1.height*1.7 >= rectangle2.position.y
+        rectangle1.position.x + rectangle1.width/1.7 >= rectangle2.position.x && 
+        rectangle1.position.x <= rectangle2.position.x + rectangle2.width/3&&
+        rectangle1.position.y<= rectangle2.position.y + rectangle2.height/12&&
+        rectangle1.position.y + rectangle1.height/1.09>= rectangle2.position.y
     )
+}
+
+function interact({itemclass}){
+
 }
 
 function animate() {
@@ -107,6 +124,16 @@ function animate() {
                 moving = false;
                 break;
             }  
+            if(i >= interactors.length) continue;
+            const interactable = interactors[i]
+            if(rectCollision({rectangle1: player, rectangle2: {...interactable, position: {
+                x: interactable.position.x,
+                y: interactable.position.y+3}}
+            })){
+                console.log('interacting!')
+                moving = false;
+                break;
+            } 
         }
         if (moving){
             movables.forEach((movable) => {
@@ -123,6 +150,16 @@ function animate() {
                 y: boundary.position.y}}
             })){
                 console.log('colliding')
+                moving = false;
+                break;
+            }
+            if(i >= interactors.length) continue;
+            const interactable = interactors[i]
+            if(rectCollision({rectangle1: player, rectangle2: {...interactable, position: {
+                x: interactable.position.x +3,
+                y: interactable.position.y}}
+            })){
+                console.log('interacting!')
                 moving = false;
                 break;
             }  
@@ -146,6 +183,16 @@ function animate() {
                 console.log('colliding')
                 moving = false;
                 break;
+            } 
+            if(i >= interactors.length) continue;
+            const interactable = interactors[i]
+            if(rectCollision({rectangle1: player, rectangle2: {...interactable, position: {
+                x: interactable.position.x -3,
+                y: interactable.position.y}}
+            })){
+                console.log('interacting!')
+                moving = false;
+                break;
             }  
         }
         if (moving) {
@@ -166,7 +213,17 @@ function animate() {
                 console.log('colliding')
                 moving = false;
                 break;
-            }  
+            }
+            if(i >= interactors.length) continue;
+            const interactable = interactors[i]
+            if(rectCollision({rectangle1: player, rectangle2: {...interactable, position: {
+                x: interactable.position.x,
+                y: interactable.position.y-3}}
+            })){
+                console.log('interacting!')
+                moving = false;
+                break;
+            }   
         }
         if(moving) {
             movables.forEach((movable) => {
