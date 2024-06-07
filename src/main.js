@@ -1,5 +1,6 @@
 import { collisions , interacts} from "../data/collisions";
 import { Boundary, Sprite, Item } from "./classes";
+import { displayDialogue } from "./utils";
 
 const canvas = document.querySelector('canvas');
 canvas.width = 1024;
@@ -45,8 +46,8 @@ collisionsMap.forEach((row, i) => {
 const interactors = []
 interactsMap.forEach((row, i) => {
     row.forEach((symbol,j) => {
-        if (symbol == 1704)
-            interactors.push(new Boundary({position: {x: j*Boundary.width + offset.x, y: i*Boundary.height +offset.y}, context: context}))
+        if (symbol > 0)
+            interactors.push(new Boundary({id: symbol ,position: {x: j*Boundary.width + offset.x, y: i*Boundary.height +offset.y}, context: context}))
     })
 })
 
@@ -102,7 +103,7 @@ const keys = {
     }
 }
 const movables = [background, ...boundaries, foreground, ...interactors]
-
+const camera = [background,foreground]
 function rectCollision({rectangle1, rectangle2}){
     return (
         rectangle1.position.x + rectangle1.width/1.7 >= rectangle2.position.x && 
@@ -111,10 +112,8 @@ function rectCollision({rectangle1, rectangle2}){
         rectangle1.position.y + rectangle1.height/1.09>= rectangle2.position.y
     )
 }
-
 function animate() {
     window.requestAnimationFrame(animate);
-
         background.draw();
         boundaries.forEach(boundary => {
             boundary.draw()        
@@ -123,9 +122,10 @@ function animate() {
         foreground.draw()
     let moving = true;
     player.moving = false
-    player.image = playerImage
     player.sizef.max = 0.25
+    player.frames.max = 4
     if ((keys.w.pressed) && (lastkey === 'w')) {
+        player.image = playerImage
         player.moving = true
         player.key = 'w'
         for (let i = 0 ; i< boundaries.length; i++){
@@ -145,6 +145,13 @@ function animate() {
                 y: interactable.position.y+3}}
             })){
                 console.log('interacting!')
+                if (interactable.id === 1800){
+                    player.isInDialogue = true;
+                    displayDialogue(
+                      "hello",
+                      () => (player.isInDialogue = false)
+                    );
+                }
                 moving = false;
                 break;
             } 
@@ -152,9 +159,10 @@ function animate() {
         if (moving){
             movables.forEach((movable) => {
                 movable.position.y += 3;
-            })}
+        })}
     }
     else if (keys.a.pressed && lastkey === 'a'){
+        player.image = playerImage
         player.moving = true
         player.key = 'a'
         for (let i = 0 ; i< boundaries.length; i++){
@@ -186,6 +194,7 @@ function animate() {
 
     } 
     else if (keys.d.pressed && lastkey === 'd') {
+        player.image = playerImage
         player.moving = true
         player.key = 'd'
         for (let i = 0 ; i< boundaries.length; i++){
@@ -216,6 +225,7 @@ function animate() {
         }
     }
     else if (keys.s.pressed && lastkey === 's') {
+        player.image = playerImage
         player.moving = true
         player.key = 's'
         for (let i = 0 ; i< boundaries.length; i++){
@@ -244,17 +254,22 @@ function animate() {
                 movable.position.y -= 3;
             })
         }
-    }else if (keys.i.pressed && lastkey === 'i'){
+    }else if (keys.i.pressed ){
         player.image = player.sprites
-        player.frames.valx = 0
         player.frames.valy = 0
-        player.sizef.max = 0.33
+        player.frames.valx = 1
+        player.sizef.max = 0.25
+        
+    }else if (keys.l.pressed ){
+        player.image = player.sprites
+        player.frames.valy = 1
+        player.frames.valx = 1
+        player.sizef.max = 0.25
     }
-    
 }
 let lastkey = "";
 animate()
-
+console.log('A')
 window.addEventListener('keydown', (e) => {
 
     switch (e.key){

@@ -9,6 +9,7 @@ export class Sprite {
         this.key = ''
         this.item = item
         this.sprites = sprites
+        this.isInDialogue = false
 
         this.image.onload = () => {
             this.width = this.image.width/ this.frames.max
@@ -71,10 +72,6 @@ export class Sprite {
                 if (this.frames.valx < this.frames.max -1 ) this.frames.valx++
                 else this.frames.valx = 0
             }
-        } else if (this.key === 'i'){
-            this.frames.max = 3
-            this.frames.valy = 0
-            this.frames.valx = 0
         }
         
     }   
@@ -83,7 +80,8 @@ export class Sprite {
 export class Boundary {
     static width = 48
     static height = 48
-    constructor({position, context}){
+    constructor({position, id, context}){
+        this.id = id
         this.position = position
         this.width = 48
         this.height = 48

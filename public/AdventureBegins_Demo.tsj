@@ -1,0 +1,14 @@
+{ "columns":19,
+ "image":"..\/..\/..\/Downloads\/AdventureBegins_DemoVersion2.0.zip\/AdventureBegins_DemoVersion\/AdventureBegins_Demo.png",
+ "imageheight":496,
+ "imagewidth":304,
+ "margin":0,
+ "name":"AdventureBegins_Demo",
+ "spacing":0,
+ "tilecount":589,
+ "tiledversion":"1.10.2",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}

@@ -11,6 +11,14 @@
         "#spritesheet": {
             "scaleInDock": 3
         },
+        "Adv&Adv_demo.tsj": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "AdventureBegins_Demo.tsj": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
         "Collisions.json": {
             "scaleInDock": 1.5,
             "scaleInEditor": 1
@@ -28,30 +36,46 @@
             "scaleInEditor": 1
         },
         "TX Shadow.tsj": {
-            "scaleInDock": 2,
+            "scaleInDock": 1.5,
             "scaleInEditor": 1
         },
         "TX Struct.json": {
             "scaleInDock": 1.5,
             "scaleInEditor": 1
         },
+        "TX Tileset Grass.tsj": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "TX Tileset Stone Ground.tsj": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
         "TX Tileset Wall.json": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "big.tsj": {
             "scaleInDock": 2,
             "scaleInEditor": 1
         },
         "map.json": {
-            "scale": 2,
-            "selectedLayer": 7,
+            "scale": 3,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 330.75,
-                "y": 308.25
+                "x": 324,
+                "y": 325.5
             }
         },
         "map.json#spritesheet": {
-            "scaleInDock": 3
+            "scaleInDock": 4
         },
         "props.tsj": {
-            "scaleInDock": 2,
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "smollprops.tsj": {
+            "scaleInDock": 3,
             "scaleInEditor": 1
         },
         "spritesheet.tsj": {
@@ -64,31 +88,30 @@
     "map.lastUsedFormat": "json",
     "openFiles": [
         "map.json",
-        "props.tsj",
-        "TX Struct.json",
-        "TX Tileset Wall.json",
-        "TX Player.tsj",
-        "TX Plant.tsj",
-        "TX Shadow.tsj",
-        "TX Shadow Plant.tsj"
+        "TX Tileset Stone Ground.tsj",
+        "TX Tileset Grass.tsj",
+        "Adv&Adv_demo.tsj",
+        "AdventureBegins_Demo.tsj"
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
+        "AdventureBegins_Demo.tsj",
+        "Adv&Adv_demo.tsj",
+        "TX Tileset Grass.tsj",
+        "TX Tileset Stone Ground.tsj",
+        "map.json",
+        "big.tsj",
+        "smollprops.tsj",
         "TX Shadow Plant.tsj",
         "TX Shadow.tsj",
         "TX Plant.tsj",
         "TX Player.tsj",
-        "TX Tileset Wall.json",
-        "TX Struct.json",
-        "props.tsj",
-        "map.json",
-        "Collisions.json",
-        "spritesheet.tsj"
+        "TX Tileset Wall.json"
     ],
     "tileset.lastUsedFilter": "All Files (*)",
     "tileset.lastUsedFormat": "json",
     "tileset.tileSize": {
-        "height": 16,
-        "width": 16
+        "height": 24,
+        "width": 24
     }
 }
