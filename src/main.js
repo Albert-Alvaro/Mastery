@@ -1,7 +1,7 @@
 import { collisions , interacts} from "../data/collisions";
 import { Boundary, Sprite } from "./classes";
 import { Moveset } from "./moveset";
-import { displayDialogue } from "./utils";
+import { displayDialogue, displayMenu } from "./utils";
 
 const canvas = document.querySelector('canvas');
 canvas.width = 1024;
@@ -164,10 +164,10 @@ function animate() {
             })){
                 console.log('interacting!')
                 if (interactable.id === 1800){
-                    player.isInDialogue = true;
+                    window.removeEventListener('keydown', handleKeydown)
                     displayDialogue(
                       "hello",
-                      () => (player.isInDialogue = false)
+                      () => (window.addEventListener('keydown', handleKeydown))
                     );
                 }
                 moving = false;
@@ -295,7 +295,11 @@ function animate() {
 
 animate()
 let lastkey = "";
-window.addEventListener('keydown', (e) => {
+window.addEventListener('keydown', handleKeydown)
+
+window.addEventListener('keyup', handleKeyup)
+
+function handleKeydown(e){
     console.log(e)
     switch (e.key){
         case 'w':
@@ -337,10 +341,16 @@ window.addEventListener('keydown', (e) => {
         case 'f':
         pressed = ""
         break;
+        case 'Tab':
+            window.removeEventListener('keydown',handleKeydown)
+            displayMenu( 
+                "hello",
+                () => (window.addEventListener('keydown', handleKeydown)))
+        break;
     }
-})
+}
 
-window.addEventListener('keyup', (e) => {
+function handleKeyup(e){
     switch (e.key){
         case 'w':
         keys.w.pressed = false;
@@ -379,4 +389,4 @@ window.addEventListener('keyup', (e) => {
         }, 400)
         break;
     }
-})
+}
