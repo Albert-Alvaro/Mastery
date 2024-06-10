@@ -1,5 +1,6 @@
 import { collisions , interacts} from "../data/collisions";
-import { Boundary, Sprite, Item } from "./classes";
+import { Boundary, Sprite } from "./classes";
+import { Moveset } from "./moveset";
 import { displayDialogue } from "./utils";
 
 const canvas = document.querySelector('canvas');
@@ -50,6 +51,9 @@ interactsMap.forEach((row, i) => {
             interactors.push(new Boundary({id: symbol ,position: {x: j*Boundary.width + offset.x, y: i*Boundary.height +offset.y}, context: context}))
     })
 })
+
+const basic = new Moveset({sequence:"illillill", sprite:attackImage})
+const test = new Moveset({sequence:'jkl', sprite:attackImage})
 
 const player = new Sprite({
     position: {
@@ -102,6 +106,19 @@ const keys = {
         pressed: false
     }
 }
+
+var pressed = ""
+
+function moveset({moveset}){
+    console.log(pressed)
+    const sequence = moveset.sequence
+    if ( sequence === pressed){
+        player.image = moveset.sprite
+        player.frames.valy = 3
+    }
+}
+
+
 const movables = [background, ...boundaries, foreground, ...interactors]
 const camera = [background,foreground]
 function rectCollision({rectangle1, rectangle2}){
@@ -124,6 +141,7 @@ function animate() {
     player.moving = false
     player.sizef.max = 0.25
     player.frames.max = 4
+    player.key = ''
     if ((keys.w.pressed) && (lastkey === 'w')) {
         player.image = playerImage
         player.moving = true
@@ -254,24 +272,31 @@ function animate() {
                 movable.position.y -= 3;
             })
         }
-    }else if (keys.i.pressed ){
+    }else if (keys.i.pressed && lastkey === 'i'){
         player.image = player.sprites
-        player.frames.valy = 0
-        player.frames.valx = 1
-        player.sizef.max = 0.25
+        player.key = 'i'
         
     }else if (keys.l.pressed ){
         player.image = player.sprites
-        player.frames.valy = 1
-        player.frames.valx = 1
-        player.sizef.max = 0.25
+        player.key = 'l'
+       
+    } else if (keys.k.pressed){
+        player.image = player.sprites
+        player.key = 'k'
+    }
+    if (pressed.length > 0){
+        const ms = moveset({moveset: basic})
+    }
+    if (pressed.length > 10){
+        pressed = ""
     }
 }
-let lastkey = "";
-animate()
-console.log('A')
-window.addEventListener('keydown', (e) => {
 
+
+animate()
+let lastkey = "";
+window.addEventListener('keydown', (e) => {
+    console.log(e)
     switch (e.key){
         case 'w':
         keys.w.pressed = true;
@@ -292,18 +317,25 @@ window.addEventListener('keydown', (e) => {
         case 'i':
         keys.i.pressed = true;
         lastkey = 'i';
+        pressed = 'i' + pressed
         break;
         case 'j':
         keys.j.pressed = true;
         lastkey = 'j';
+        pressed = 'j' + pressed
         break;
         case 'k':
         keys.k.pressed = true;
         lastkey = 'k';
+        pressed = 'k' + pressed
         break;
         case 'l':
         keys.l.pressed = true;
         lastkey = 'l';
+        pressed = 'l' + pressed
+        break;
+        case 'f':
+        pressed = ""
         break;
     }
 })
@@ -323,20 +355,28 @@ window.addEventListener('keyup', (e) => {
         keys.d.pressed = false;  
         break;
         case 'i':
-        keys.i.pressed = false;
-        lastkey = 'i';
+        setTimeout(() => {
+            keys.i.pressed = false,
+            lastkey = 'i'
+        }, 400)
         break;
         case 'j':
-        keys.j.pressed = false;
-        lastkey = 'j';
+        setTimeout(() => {
+            keys.j.pressed = false,
+            lastkey = 'j'
+        }, 400)
         break;
         case 'k':
-        keys.k.pressed = false;
-        lastkey = 'k';
+        setTimeout(() => {
+            keys.k.pressed = false,
+            lastkey = 'k'
+        }, 400)
         break;
         case 'l':
-        keys.l.pressed = false;
-        lastkey = 'l';
+        setTimeout(() => {
+            keys.l.pressed = false,
+            lastkey = 'l'
+        }, 400)
         break;
     }
 })

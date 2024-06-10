@@ -30,7 +30,7 @@ export class Sprite {
             this.image.width * this.sizef.max,
             this.image.height * this.sizef.max, 
         );
-        if(!this.moving) {
+        if(!this.moving && this.key == '') {
             this.frames.valx = 0 
             return}
         if(this.key === 'w'){
@@ -69,6 +69,36 @@ export class Sprite {
             }
     
             if(this.frames.elapsed%20 === 0 ){
+                if (this.frames.valx < this.frames.max -1 ) this.frames.valx++
+                else this.frames.valx = 0
+            }
+        }else if (this.key === 'i'){
+            this.frames.valy = 0
+            if(this.frames.max > 1){
+                this.frames.elapsed++
+            }
+    
+            if(this.frames.elapsed%30 === 0 ){
+                if (this.frames.valx < this.frames.max -1 ) this.frames.valx++
+                else this.frames.valx = 0
+            }
+        }else if (this.key === 'l'){
+            this.frames.valy = 1
+            if(this.frames.max > 1){
+                this.frames.elapsed++
+            }
+    
+            if(this.frames.elapsed%30 === 0 ){
+                if (this.frames.valx < this.frames.max -1 ) this.frames.valx++
+                else this.frames.valx = 0
+            }
+        }else if (this.key === 'k'){
+            this.frames.valy = 2
+            if(this.frames.max > 1){
+                this.frames.elapsed++
+            }
+    
+            if(this.frames.elapsed%30 === 0 ){
                 if (this.frames.valx < this.frames.max -1 ) this.frames.valx++
                 else this.frames.valx = 0
             }
