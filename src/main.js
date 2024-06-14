@@ -1,4 +1,6 @@
 import { collisions , interacts} from "../data/collisions";
+import { text_data } from "../data/interaction_data";
+import { movesets_equipped } from "../data/movesets_data";
 import { Boundary, Sprite } from "./classes";
 import { Moveset } from "./moveset";
 import { displayDialogue, displayMenu } from "./utils";
@@ -52,8 +54,10 @@ interactsMap.forEach((row, i) => {
     })
 })
 
-const basic = new Moveset({sequence:"illillill", sprite:attackImage})
-const test = new Moveset({sequence:'jkl', sprite:attackImage})
+const basic = new Moveset({name: "basic", sequence:"illillill", sprite:attackImage})
+const test = new Moveset({name: "test", sequence:'jkl', sprite:attackImage})
+
+const movesets_possesed = [test];
 
 const player = new Sprite({
     position: {
@@ -108,19 +112,22 @@ const keys = {
 }
 
 var pressed = ""
+const movables = [background, ...boundaries, foreground, ...interactors]
+const camera = [background,foreground]
+
 
 function moveset({moveset}){
     console.log(pressed)
     const sequence = moveset.sequence
     if ( sequence === pressed){
-        player.image = moveset.sprite
-        player.frames.valy = 3
+            player.image = moveset.sprite
+            player.frames.valy = 3
+            setTimeout(() => {
+                pressed = ""
+            }, 1000)
     }
 }
 
-
-const movables = [background, ...boundaries, foreground, ...interactors]
-const camera = [background,foreground]
 function rectCollision({rectangle1, rectangle2}){
     return (
         rectangle1.position.x + rectangle1.width/1.7 >= rectangle2.position.x && 
@@ -130,6 +137,7 @@ function rectCollision({rectangle1, rectangle2}){
     )
 }
 function animate() {
+    var currentMoveset = movesets_equipped[movesets_equipped.length-1];
     window.requestAnimationFrame(animate);
         background.draw();
         boundaries.forEach(boundary => {
@@ -152,7 +160,6 @@ function animate() {
                 x: boundary.position.x, 
                 y: boundary.position.y+3}}
             })){
-                console.log('colliding')
                 moving = false;
                 break;
             }  
@@ -162,11 +169,18 @@ function animate() {
                 x: interactable.position.x,
                 y: interactable.position.y+3}}
             })){
-                console.log('interacting!')
+                lastkey = ""
                 if (interactable.id === 1800){
                     window.removeEventListener('keydown', handleKeydown)
+                    if (!movesets_possesed.includes(basic)) movesets_possesed.push(basic)
                     displayDialogue(
-                      "hello",
+                        text_data.sword_wall,
+                        () => (window.addEventListener('keydown', handleKeydown))
+                    );
+                } else if (interactable.id === 1705){
+                    window.removeEventListener('keydown', handleKeydown)
+                    displayDialogue(
+                      text_data.tombstone,
                       () => (window.addEventListener('keydown', handleKeydown))
                     );
                 }
@@ -189,7 +203,6 @@ function animate() {
                 x: boundary.position.x+3, 
                 y: boundary.position.y}}
             })){
-                console.log('colliding')
                 moving = false;
                 break;
             }
@@ -199,7 +212,6 @@ function animate() {
                 x: interactable.position.x +3,
                 y: interactable.position.y}}
             })){
-                console.log('interacting!')
                 moving = false;
                 break;
             }  
@@ -221,7 +233,6 @@ function animate() {
                 x: boundary.position.x-3, 
                 y: boundary.position.y}}
             })){
-                console.log('colliding')
                 moving = false;
                 break;
             } 
@@ -231,7 +242,6 @@ function animate() {
                 x: interactable.position.x -3,
                 y: interactable.position.y}}
             })){
-                console.log('interacting!')
                 moving = false;
                 break;
             }  
@@ -252,7 +262,6 @@ function animate() {
                 x: boundary.position.x, 
                 y: boundary.position.y-3}}
             })){
-                console.log('colliding')
                 moving = false;
                 break;
             }
@@ -262,7 +271,6 @@ function animate() {
                 x: interactable.position.x,
                 y: interactable.position.y-3}}
             })){
-                console.log('interacting!')
                 moving = false;
                 break;
             }   
@@ -285,7 +293,7 @@ function animate() {
         player.key = 'k'
     }
     if (pressed.length > 0){
-        const ms = moveset({moveset: basic})
+        const ms = moveset({moveset: currentMoveset})
     }
     if (pressed.length > 10){
         pressed = ""
@@ -296,11 +304,9 @@ function animate() {
 animate()
 let lastkey = "";
 window.addEventListener('keydown', handleKeydown)
-
 window.addEventListener('keyup', handleKeyup)
 
 function handleKeydown(e){
-    console.log(e)
     switch (e.key){
         case 'w':
         keys.w.pressed = true;
@@ -344,7 +350,7 @@ function handleKeydown(e){
         case 'Tab':
             window.removeEventListener('keydown',handleKeydown)
             displayMenu( 
-                "hello",
+                movesets_possesed,
                 () => (window.addEventListener('keydown', handleKeydown)))
         break;
     }

@@ -1,5 +1,6 @@
 export class Moveset{
-    constructor({sequence, sprite}){
+    constructor({sequence, sprite, name}){
+        this.name = name
         this.sequence = sequence
         this.sprite = sprite
     }
