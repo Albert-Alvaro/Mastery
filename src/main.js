@@ -117,7 +117,6 @@ const camera = [background,foreground]
 
 
 function moveset({moveset}){
-    console.log(pressed)
     const sequence = moveset.sequence
     if ( sequence === pressed){
             player.image = moveset.sprite
@@ -136,8 +135,9 @@ function rectCollision({rectangle1, rectangle2}){
         rectangle1.position.y + rectangle1.height/1.09>= rectangle2.position.y
     )
 }
+
 function animate() {
-    var currentMoveset = movesets_equipped[movesets_equipped.length-1];
+    let currentMoveset = movesets_equipped[movesets_equipped.length-1];
     window.requestAnimationFrame(animate);
         background.draw();
         boundaries.forEach(boundary => {
@@ -184,6 +184,7 @@ function animate() {
                       () => (window.addEventListener('keydown', handleKeydown))
                     );
                 }
+                console.log()
                 moving = false;
                 break;
             } 
@@ -212,6 +213,15 @@ function animate() {
                 x: interactable.position.x +3,
                 y: interactable.position.y}}
             })){
+                lastkey = ""
+                if (interactable.id === 1705){
+                    window.removeEventListener('keydown', handleKeydown)
+                    displayDialogue(
+                      text_data.tombstone,
+                      () => (window.addEventListener('keydown', handleKeydown))
+                    );
+                }
+                console.log()
                 moving = false;
                 break;
             }  
@@ -352,7 +362,7 @@ function handleKeydown(e){
             displayMenu( 
                 movesets_possesed,
                 () => (window.addEventListener('keydown', handleKeydown)))
-        break;
+            break;
     }
 }
 

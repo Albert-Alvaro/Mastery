@@ -48,10 +48,14 @@ export function displayDialogue(text, onDisplayEnd) {
     // let currentButton;
 
     movesets.forEach(m => {
+      const div = document.createElement("div");
       const ul = document.createElement("button");
       ul.id = m.name;
+      div.className = "moveset-div"
+      ul.className = "moveset-button"
       ul.textContent = m.name;
-      diabox.appendChild(ul); 
+      div.appendChild(ul)
+      diabox.appendChild(div); 
     });
     let index = 0;
     let currentText = "";
@@ -86,10 +90,7 @@ export function displayDialogue(text, onDisplayEnd) {
       dialogueUI.style.display = "none";
       dialogue.innerHTML = "";
       diabox.style.height = "20vh";
-      movesets.forEach(m => {
-        const ul = document.getElementById(m.name);
-        diabox.removeChild(ul)
-      });
+      document.querySelectorAll(".moveset-div").forEach(e => e.remove());
       clearInterval(intervalRef);
       closeBtn.removeEventListener("click", onCloseBtnClick);
     }

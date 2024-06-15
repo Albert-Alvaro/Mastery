@@ -60,11 +60,11 @@
             "scaleInEditor": 1
         },
         "map.json": {
-            "scale": 8,
+            "scale": 1.5,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 353.125,
-                "y": 166.6875
+                "x": 374,
+                "y": 393
             }
         },
         "map.json#spritesheet": {

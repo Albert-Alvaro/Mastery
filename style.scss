@@ -52,11 +52,31 @@ canvas{
     .note {
       position: absolute;
       left: 5%;
-      top: 1vh;
       display: flex;
       flex-direction: column;
       color: rgb(238, 238, 238);
     }
-
+    .moveset-div{
+      left: 20%;
+      margin-top: 1vh;
+      margin-bottom: 20px;
+      text-align: center;
+      .moveset-button {
+        background-color: #cdc1b5;
+        color: black;
+        font-weight: 600;
+        text-align: center;
+        height: 30px;
+        width: 100px;
+      }
+      .moveset-button:hover{
+        background-image: linear-gradient(#eec744, #f4b17a);
+        color: black;
+      }
+      .moveset-button::after{
+        background-image: linear-gradient(#eec744, #f4b17a);
+        color: black;
+      }
+    }
 
 }
