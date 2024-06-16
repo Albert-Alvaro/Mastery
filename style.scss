@@ -16,7 +16,7 @@ canvas{
       position: absolute;
       z-index: 9;
       top: 3%;
-      left: 2%;
+      right: 2%;
       width: 16vw;
       height: 7vh;
       background-color: rgb(2, 110, 200);
@@ -34,7 +34,7 @@ canvas{
       position: absolute;
       z-index: 9;
       top: 3%;
-      right: 2%;
+      left: 2%;
       width: 16vw;
       height: 7vh;
       background-color: rgb(2, 110, 200);
@@ -70,6 +70,8 @@ canvas{
   
     .ui-text {
       margin: 0;
+      font-size: 2vh;
+      font-weight: 550;
       user-select: none;
     }
   

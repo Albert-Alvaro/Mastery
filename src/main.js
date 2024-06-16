@@ -54,10 +54,11 @@ interactsMap.forEach((row, i) => {
     })
 })
 
-const basic = new Moveset({name: "basic", sequence:"illillill", sprite:attackImage, upper_bound: 4, lower_bound: 2})
+const basic = new Moveset({name: "basic", sequence:"illi", sprite:attackImage, upper_bound: 4, lower_bound: 2})
 const test = new Moveset({name: "test", sequence:'jkl', sprite:attackImage, upper_bound: 4, lower_bound: 2})
+const mastery = new Moveset({name: "Mastery", sequence:'iikklliikkll', sprite:attackImage, upper_bound: 15, lower_bound: 13})
 
-const movesets_possesed = [test];
+const movesets_possesed = [];
 
 const player = new Sprite({
     position: {
@@ -108,6 +109,9 @@ const keys = {
     },
     l: {
         pressed: false
+    },
+    shift: {
+        pressed: false
     }
 }
 
@@ -136,8 +140,8 @@ function moveset({moveset}){
 function timeCheck({time, lower_boundary, upper_boundary}){
     if(time <= lower_boundary){
         const msg = document.getElementById("msg")
-        msg.innerText = "LOWER_WEAK"
-        console.log("LOWER_WEAK")
+        msg.innerText = "LOWER WEAK"
+        console.log("LOWER WEAK")
         counter =0
     }
     else if (time > lower_boundary && time < upper_boundary){
@@ -148,7 +152,7 @@ function timeCheck({time, lower_boundary, upper_boundary}){
 
     } else if (time >= upper_boundary){
         const msg = document.getElementById("msg")
-        msg.innerText = "UPPER_WEAK"
+        msg.innerText = "UPPER WEAK"
         console.log("UPPER WEAK")
         counter =0
     }
@@ -164,6 +168,7 @@ function rectCollision({rectangle1, rectangle2}){
 }
 let time_elapsed = 0;
 let counter = 0;
+let speed;
 function animate() {
     let currentMoveset = movesets_equipped[movesets_equipped.length-1];
     const eq = document.getElementById("equipped")
@@ -180,6 +185,8 @@ function animate() {
     player.sizef.max = 0.25
     player.frames.max = 4
     player.key = ''
+    if (keys.shift.pressed) speed = 3
+    else speed = 1.5
     if ((keys.w.pressed) && (lastkey === 'w')) {
         player.image = playerImage
         player.moving = true
@@ -217,6 +224,7 @@ function animate() {
                     );
                 } else if (interactable.id === 1705){
                     window.removeEventListener('keydown', handleKeydown)
+                    if (!movesets_possesed.includes(mastery)) movesets_possesed.push(mastery)
                     displayDialogue(
                       text_data.tombstone,
                       () => (window.addEventListener('keydown', handleKeydown))
@@ -229,7 +237,7 @@ function animate() {
         }
         if (moving){
             movables.forEach((movable) => {
-                movable.position.y += 3;
+                movable.position.y += speed;
         })}
     }
     else if (keys.a.pressed && lastkey === 'a'){
@@ -251,7 +259,7 @@ function animate() {
                 x: interactable.position.x +3,
                 y: interactable.position.y}}
             })){
-                lastkey = ""
+                lastkey = ""    
                 if (interactable.id === 1705){
                     window.removeEventListener('keydown', handleKeydown)
                     displayDialogue(
@@ -266,7 +274,7 @@ function animate() {
         }
         if(moving){
             movables.forEach((movable) => {
-                movable.position.x += 3;
+                movable.position.x += speed;
             })
         }
 
@@ -296,7 +304,7 @@ function animate() {
         }
         if (moving) {
             movables.forEach((movable) => {
-                movable.position.x -= 3;
+                movable.position.x -= speed;
             })
         }
     }
@@ -325,7 +333,7 @@ function animate() {
         }
         if(moving) {
             movables.forEach((movable) => {
-                movable.position.y -= 3;
+                movable.position.y -= speed;
             })
         }
     }else if (keys.i.pressed && lastkey === 'i'){
@@ -342,12 +350,12 @@ function animate() {
     }
     else if (pressed.length > 0 && movesets_equipped.length > 1){
         time_elapsed++
-        if (time_elapsed%120 === 0){
+        if (time_elapsed%110 === 0){
             counter++
             moveset({moveset: currentMoveset})
         }
     }
-    if (pressed.length > 10){
+    if (pressed.length > 20){
         pressed = ""
     }
 }
@@ -356,6 +364,19 @@ animate()
 let lastkey = "";
 window.addEventListener('keydown', handleKeydown)
 window.addEventListener('keyup', handleKeyup)
+window.addEventListener('keydown', sprint)
+window.addEventListener('keyup', sprint_up)
+function sprint(e){
+    if (e.key === "Shift"){
+        keys.shift.pressed = true
+    }
+}
+function sprint_up(e){
+    if (e.key === "Shift"){
+        keys.shift.pressed = false
+        lastkey = ''
+    }
+}
 
 function handleKeydown(e){
     switch (e.key){
@@ -409,7 +430,7 @@ function handleKeydown(e){
             displayMenu( 
                 movesets_possesed,
                 () => (window.addEventListener('keydown', handleKeydown)))
-            break;
+        break;
     }
 }
 
