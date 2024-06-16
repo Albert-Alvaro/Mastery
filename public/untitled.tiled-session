@@ -60,18 +60,18 @@
             "scaleInEditor": 1
         },
         "map.json": {
-            "scale": 1.5,
-            "selectedLayer": 7,
+            "scale": 3,
+            "selectedLayer": 8,
             "viewCenter": {
-                "x": 374,
-                "y": 393
+                "x": 659.3333333333333,
+                "y": 218.16666666666663
             }
         },
         "map.json#spritesheet": {
             "scaleInDock": 4
         },
         "props.tsj": {
-            "scaleInDock": 3,
+            "scaleInDock": 4,
             "scaleInEditor": 1
         },
         "smollprops.tsj": {

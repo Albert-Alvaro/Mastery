@@ -54,8 +54,8 @@ interactsMap.forEach((row, i) => {
     })
 })
 
-const basic = new Moveset({name: "basic", sequence:"illillill", sprite:attackImage})
-const test = new Moveset({name: "test", sequence:'jkl', sprite:attackImage})
+const basic = new Moveset({name: "basic", sequence:"illillill", sprite:attackImage, upper_bound: 4, lower_bound: 2})
+const test = new Moveset({name: "test", sequence:'jkl', sprite:attackImage, upper_bound: 4, lower_bound: 2})
 
 const movesets_possesed = [test];
 
@@ -121,9 +121,26 @@ function moveset({moveset}){
     if ( sequence === pressed){
             player.image = moveset.sprite
             player.frames.valy = 3
+            timeCheck({time: counter, lower_boundary: moveset.lower_bound, upper_boundary: moveset.upper_bound})    
             setTimeout(() => {
                 pressed = ""
-            }, 1000)
+                player.image = playerImage
+            }, 400)
+    }
+}
+
+function timeCheck({time, lower_boundary, upper_boundary}){
+    if(time <= lower_boundary){
+        console.log("LOWER_WEAK")
+        counter =0
+    }
+    else if (time > lower_boundary && time < upper_boundary){
+        console.log("CRITICAL")
+        counter =0
+
+    } else if (time >= upper_boundary){
+        console.log("UPPER WEAK")
+        counter =0
     }
 }
 
@@ -135,7 +152,8 @@ function rectCollision({rectangle1, rectangle2}){
         rectangle1.position.y + rectangle1.height/1.09>= rectangle2.position.y
     )
 }
-
+let time_elapsed = 0;
+let counter = 0;
 function animate() {
     let currentMoveset = movesets_equipped[movesets_equipped.length-1];
     window.requestAnimationFrame(animate);
@@ -143,8 +161,8 @@ function animate() {
         boundaries.forEach(boundary => {
             boundary.draw()        
         })
-        player.draw()
-        foreground.draw()
+    player.draw()
+    foreground.draw()
     let moving = true;
     player.moving = false
     player.sizef.max = 0.25
@@ -175,6 +193,14 @@ function animate() {
                     if (!movesets_possesed.includes(basic)) movesets_possesed.push(basic)
                     displayDialogue(
                         text_data.sword_wall,
+                        () => (window.addEventListener('keydown', handleKeydown))
+                    );
+                }
+                else if (interactable.id === 1999){
+                    window.removeEventListener('keydown', handleKeydown)
+                    if (!movesets_possesed.includes(basic)) movesets_possesed.push(basic)
+                    displayDialogue(
+                        text_data.sword,
                         () => (window.addEventListener('keydown', handleKeydown))
                     );
                 } else if (interactable.id === 1705){
@@ -302,14 +328,17 @@ function animate() {
         player.image = player.sprites
         player.key = 'k'
     }
-    if (pressed.length > 0){
-        const ms = moveset({moveset: currentMoveset})
+    else if (pressed.length > 0 && movesets_equipped.length > 1){
+        time_elapsed++
+        if (time_elapsed%120 === 0){
+            counter++
+            moveset({moveset: currentMoveset})
+        }
     }
     if (pressed.length > 10){
         pressed = ""
     }
 }
-
 
 animate()
 let lastkey = "";
@@ -338,24 +367,29 @@ function handleKeydown(e){
         keys.i.pressed = true;
         lastkey = 'i';
         pressed = 'i' + pressed
+        window.removeEventListener('keydown', handleKeydown)
         break;
         case 'j':
         keys.j.pressed = true;
         lastkey = 'j';
         pressed = 'j' + pressed
+        window.removeEventListener('keydown', handleKeydown)
         break;
         case 'k':
         keys.k.pressed = true;
         lastkey = 'k';
         pressed = 'k' + pressed
+        window.removeEventListener('keydown', handleKeydown)
         break;
         case 'l':
         keys.l.pressed = true;
         lastkey = 'l';
         pressed = 'l' + pressed
+        window.removeEventListener('keydown', handleKeydown)
         break;
         case 'f':
         pressed = ""
+        counter = 0
         break;
         case 'Tab':
             window.removeEventListener('keydown',handleKeydown)
@@ -384,24 +418,28 @@ function handleKeyup(e){
         setTimeout(() => {
             keys.i.pressed = false,
             lastkey = 'i'
+            window.addEventListener('keydown', handleKeydown)
         }, 400)
         break;
         case 'j':
         setTimeout(() => {
             keys.j.pressed = false,
             lastkey = 'j'
+            window.addEventListener('keydown', handleKeydown)
         }, 400)
         break;
         case 'k':
         setTimeout(() => {
             keys.k.pressed = false,
             lastkey = 'k'
+            window.addEventListener('keydown', handleKeydown)
         }, 400)
         break;
         case 'l':
         setTimeout(() => {
             keys.l.pressed = false,
             lastkey = 'l'
+            window.addEventListener('keydown', handleKeydown)
         }, 400)
         break;
     }

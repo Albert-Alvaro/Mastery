@@ -89,7 +89,7 @@ export function displayDialogue(text, onDisplayEnd) {
       onDisplayEnd();
       dialogueUI.style.display = "none";
       dialogue.innerHTML = "";
-      diabox.style.height = "20vh";
+      diabox.style.height = "15vh";
       document.querySelectorAll(".moveset-div").forEach(e => e.remove());
       clearInterval(intervalRef);
       closeBtn.removeEventListener("click", onCloseBtnClick);
