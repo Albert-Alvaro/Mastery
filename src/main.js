@@ -111,7 +111,7 @@ const keys = {
     }
 }
 
-var pressed = ""
+let pressed = ""
 const movables = [background, ...boundaries, foreground, ...interactors]
 const camera = [background,foreground]
 
@@ -126,19 +126,29 @@ function moveset({moveset}){
                 pressed = ""
                 player.image = playerImage
             }, 400)
+            setTimeout(() => {
+                const msg = document.getElementById("msg")
+                msg.innerText = ""
+            }, 5000)
     }
 }
 
 function timeCheck({time, lower_boundary, upper_boundary}){
     if(time <= lower_boundary){
+        const msg = document.getElementById("msg")
+        msg.innerText = "LOWER_WEAK"
         console.log("LOWER_WEAK")
         counter =0
     }
     else if (time > lower_boundary && time < upper_boundary){
+        const msg = document.getElementById("msg")
+        msg.innerText = "CRITICAL"
         console.log("CRITICAL")
         counter =0
 
     } else if (time >= upper_boundary){
+        const msg = document.getElementById("msg")
+        msg.innerText = "UPPER_WEAK"
         console.log("UPPER WEAK")
         counter =0
     }
@@ -156,6 +166,8 @@ let time_elapsed = 0;
 let counter = 0;
 function animate() {
     let currentMoveset = movesets_equipped[movesets_equipped.length-1];
+    const eq = document.getElementById("equipped")
+    eq.innerText = currentMoveset.name
     window.requestAnimationFrame(animate);
         background.draw();
         boundaries.forEach(boundary => {
@@ -393,6 +405,7 @@ function handleKeydown(e){
         break;
         case 'Tab':
             window.removeEventListener('keydown',handleKeydown)
+            pressed = ""
             displayMenu( 
                 movesets_possesed,
                 () => (window.addEventListener('keydown', handleKeydown)))

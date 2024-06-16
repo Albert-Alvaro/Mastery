@@ -1,6 +1,7 @@
 export class Moveset{
-    constructor({sequence, sprite, name, lower_bound, upper_bound}){
+    constructor({sequence, sprite, name,  hidden_name = "nothing to see ;)", lower_bound, upper_bound}){
         this.name = name
+        this.hidden_name = hidden_name
         this.sequence = sequence
         this.sprite = sprite
         this.lower_bound = lower_bound
