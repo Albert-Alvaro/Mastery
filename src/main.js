@@ -2,7 +2,7 @@ import { collisions , interacts} from "../data/collisions";
 import { text_data } from "../data/interaction_data";
 import { movesets_equipped } from "../data/movesets_data";
 import { Boundary, Sprite } from "./classes";
-import { Moveset } from "./moveset";
+import { basic, mastery, Moveset, test } from "./moveset";
 import { displayDialogue, displayMenu } from "./utils";
 
 const canvas = document.querySelector('canvas');
@@ -54,16 +54,12 @@ interactsMap.forEach((row, i) => {
     })
 })
 
-const basic = new Moveset({name: "basic", sequence:"illi", sprite:attackImage, upper_bound: 4, lower_bound: 2})
-const test = new Moveset({name: "test", sequence:'jkl', sprite:attackImage, upper_bound: 4, lower_bound: 2})
-const mastery = new Moveset({name: "Mastery", sequence:'iikklliikkll', sprite:attackImage, upper_bound: 15, lower_bound: 13})
-
 const movesets_possesed = [];
 
 const player = new Sprite({
     position: {
         x:canvas.width/2 - (256 / 4) / 2, 
-        y:canvas.height /2- 256 / 2,
+        y:canvas.height /2- 256 / 2 
     },
     image: playerImage,
     frames: {
@@ -73,6 +69,23 @@ const player = new Sprite({
     context: context,
     sprites: attackImage
 })
+
+const dummy = new Sprite({
+    position: {
+        x:canvas.width/2 +250, 
+        y:canvas.height/2 +400,
+    },
+    image: attackImage,
+    frames: {
+        max: 4
+    },
+    sizef: {max:0.25},
+    context: context,
+    sprites: attackImage
+})
+
+const enemies = [dummy]
+
 const background = new Sprite({
     position: { x: offset.x, y: offset.y,},
     image: image, 
@@ -116,7 +129,7 @@ const keys = {
 }
 
 let pressed = ""
-const movables = [background, ...boundaries, foreground, ...interactors]
+const movables = [background, ...boundaries, foreground, ...interactors, dummy]
 const camera = [background,foreground]
 
 
@@ -133,7 +146,7 @@ function moveset({moveset}){
             setTimeout(() => {
                 const msg = document.getElementById("msg")
                 msg.innerText = ""
-            }, 5000)
+            }, 4000)
     }
 }
 
@@ -178,6 +191,7 @@ function animate() {
         boundaries.forEach(boundary => {
             boundary.draw()        
         })
+    dummy.draw()
     player.draw()
     foreground.draw()
     let moving = true;
@@ -191,6 +205,20 @@ function animate() {
         player.image = playerImage
         player.moving = true
         player.key = 'w'
+
+        // enemy collision
+        for (let j = 0 ; j < enemies.length; j++){
+            if(rectCollision({rectangle1: player, rectangle2:{...enemies[j], position: {
+                x: enemies[j].position.x,
+                y: enemies[j].position.y+3  
+            }}
+            })){
+                moving = false;
+                break;
+            }  
+        }
+
+        //boundary and interactables collision
         for (let i = 0 ; i< boundaries.length; i++){
             const boundary = boundaries[i]
             if(rectCollision({rectangle1: player, rectangle2: {...boundary, position: {
@@ -244,6 +272,19 @@ function animate() {
         player.image = playerImage
         player.moving = true
         player.key = 'a'
+        // enemy collision
+        for (let j = 0 ; j < enemies.length; j++){
+            if(rectCollision({rectangle1: player, rectangle2:{...enemies[j], position: {
+                x: enemies[j].position.x+3,
+                y: enemies[j].position.y  
+            }}
+            })){
+                moving = false;
+                break;
+            }  
+        }
+
+        // boundary and interactable collision
         for (let i = 0 ; i< boundaries.length; i++){
             const boundary = boundaries[i]
             if(rectCollision({rectangle1: player, rectangle2: {...boundary, position: {
@@ -283,6 +324,19 @@ function animate() {
         player.image = playerImage
         player.moving = true
         player.key = 'd'
+        // enemy collision
+        for (let j = 0 ; j < enemies.length; j++){
+            if(rectCollision({rectangle1: player, rectangle2:{...enemies[j], position: {
+                x: enemies[j].position.x-3,
+                y: enemies[j].position.y  
+            }}
+            })){
+                moving = false;
+                break;
+            }  
+        }
+
+        // boundary and interactable collision
         for (let i = 0 ; i< boundaries.length; i++){
             const boundary = boundaries[i]
             if(rectCollision({rectangle1: player, rectangle2: {...boundary, position: {
@@ -312,6 +366,19 @@ function animate() {
         player.image = playerImage
         player.moving = true
         player.key = 's'
+        // enemy collision
+        for (let j = 0 ; j < enemies.length; j++){
+            if(rectCollision({rectangle1: player, rectangle2:{...enemies[j], position: {
+                x: enemies[j].position.x,
+                y: enemies[j].position.y-3  
+            }}
+            })){
+                moving = false;
+                break;
+            }  
+        }
+
+        // boundary and interactable collision
         for (let i = 0 ; i< boundaries.length; i++){
             const boundary = boundaries[i]
             if(rectCollision({rectangle1: player, rectangle2: {...boundary, position: {
